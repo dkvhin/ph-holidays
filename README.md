@@ -1,7 +1,7 @@
 # Fetch Philippine Holidays
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/dkvhin/ph-holidays.svg?style=flat-square)](https://packagist.org/packages/dkvhin/ph-holidays)
-[![Tests](https://img.shields.io/github/actions/workflow/status/dkvhin/ph-holidays/php.yml?branch=main&label=tests&style=flat-square)](https://github.com/dkvhin/ph-holidays/actions/workflows/php.yml)
+[![Tests](https://img.shields.io/github/actions/workflow/status/dkvhin/ph-holidays/php.yml?branch=master&label=tests&style=flat-square)](https://github.com/dkvhin/ph-holidays/actions/workflows/php.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/dkvhin/ph-holidays.svg?style=flat-square)](https://packagist.org/packages/dkvhin/ph-holidays)
 
 
