@@ -4,7 +4,6 @@
 [![Tests](https://img.shields.io/github/actions/workflow/status/dkvhin/ph-holidays/php.yml?branch=master&label=tests&style=flat-square)](https://github.com/dkvhin/ph-holidays/actions/workflows/php.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/dkvhin/ph-holidays.svg?style=flat-square)](https://packagist.org/packages/dkvhin/ph-holidays)
 
-
 This package can fetch regular and special holidays from the official website
 https://www.officialgazette.gov.ph/nationwide-holidays/ 
 
