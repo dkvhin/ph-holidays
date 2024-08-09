@@ -8,6 +8,7 @@ use GuzzleHttp\Handler\MockHandler;
 use Dkvhin\PhHolidays\PhilippineHolidays;
 use GuzzleHttp\Exception\RequestException;
 use Dkvhin\PhHolidays\Exceptions\InvalidYear;
+use GuzzleHttp\Client;
 
 it('can get holidays on the current year', function () {
 
@@ -17,9 +18,9 @@ it('can get holidays on the current year', function () {
     ]);
 
     $handlerStack = HandlerStack::create($mock);
+    $client = new Client(['handlers'  => $handlerStack]);
+    $fetched = PhilippineHolidays::fetch(null, $client);
     
-    PhilippineHolidays::setMockHandler($handlerStack);
-    $fetched = PhilippineHolidays::fetch(null, $handlerStack);
     $holidays = $fetched->regular();
     expect($holidays)
         ->toBeArray()
