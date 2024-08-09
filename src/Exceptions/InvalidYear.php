@@ -2,10 +2,16 @@
 
 namespace Dkvhin\PhHolidays\Exceptions;
 
+use GuzzleHttp\Exception\ClientException;
 use RuntimeException;
 
 class InvalidYear extends RuntimeException
 {
+    public static function error(int $year, ClientException $ex): self
+    {
+        return new self("Year `{$year}` not found : {$ex->getMessage()}");
+    }
+
     public static function notFound(int $year): self
     {
         return new self("Year `{$year}` not found");

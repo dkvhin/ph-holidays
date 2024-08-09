@@ -77,7 +77,7 @@ class PhilippineHolidays
 
             return new static($regularHolidays, $specialHolidays);
         } catch (\GuzzleHttp\Exception\ClientException $ex) {
-            throw InvalidYear::notFound($currentYear);
+            throw InvalidYear::error($currentYear, $ex);
         }
     }
 
@@ -122,7 +122,7 @@ class PhilippineHolidays
     /**
      * @return array<int<0, max>, array{name: string, date: string}>
      */
-    public function regular() : array
+    public function regular(): array
     {
         return $this->regularHolidays;
     }
@@ -130,7 +130,7 @@ class PhilippineHolidays
     /**
      * @return array<int<0, max>, array{name: string, date: string}>
      */
-    public function special() : array
+    public function special(): array
     {
         return $this->regularHolidays;
     }
