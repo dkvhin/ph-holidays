@@ -1,0 +1,49 @@
+{
+    "name": "dkvhin/ph-holidays",
+    "description": "Calculate public holidays",
+    "keywords": [
+        "philippines",
+        "holidays"
+    ],
+    "homepage": "https://github.com/dkvhin/ph-holidays",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ervin Musngi",
+            "email": "ervinm@d7softwaresolutions.com",
+            "role": "Developer"
+        }
+    ],
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Dkvhin\\PhHolidays\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dkvhin\\PhHolidays\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "baseline": "vendor/bin/phpstan analyse --generate-baseline",
+        "test": "vendor/bin/pest --compact"
+    },
+    "require": {
+        "php": "^8.1",
+        "nesbot/carbon": "^3.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.35",
+        "phpstan/phpstan": "^1.11"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
