@@ -19,7 +19,7 @@ it('can get holidays on the current year', function () {
 
     $handlerStack = HandlerStack::create($mock);
     $client = new Client(['handler'  => $handlerStack]);
-    $fetched = PhilippineHolidays::fetch(null, $client);
+    $fetched = PhilippineHolidays::fetch(null);
 
     $holidays = $fetched->regular();
     expect($holidays)

@@ -20,7 +20,7 @@ class PhilippineHolidays
     ) {}
 
 
-    public static function fetch(?int $currentYear = null, ?\GuzzleHttp\Client $client = null): static
+    public static function fetch(?int $currentYear = null, ?\GuzzleHttp\Client $client = null, bool $isRetry = false): static
     {
         $currentYear ??= CarbonImmutable::now()->year;
 
@@ -78,6 +78,14 @@ class PhilippineHolidays
 
             return new static($regularHolidays, $specialHolidays);
         } catch (\GuzzleHttp\Exception\ClientException $ex) {
+
+            // if 403, it is either this is the first request
+            // usually it is blocked on the first request
+            // we can retry again to request the page
+            if($ex->getCode() === 403 && !$isRetry) {
+                return self::fetch($currentYear, $client, true);
+            }
+
             throw InvalidYear::error($currentYear, $ex);
         }
     }
