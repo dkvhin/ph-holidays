@@ -1,6 +1,6 @@
 {
     "name": "dkvhin/ph-holidays",
-    "description": "Calculate public holidays",
+    "description": "Fetch Holidays from Philippine government website",
     "keywords": [
         "philippines",
         "holidays"
