@@ -3,6 +3,8 @@
 This package can fetch regular and special holidays from the official website
 https://www.officialgazette.gov.ph/nationwide-holidays/ 
 
+NOTE: This is not yet working 100% as the website is using a bot checker ( cloudflare ), this can cause errors if used in production.
+
 ```php
 use Dkvhin\PhHolidays\PhilippineHolidays;
 
