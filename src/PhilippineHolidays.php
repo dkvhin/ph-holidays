@@ -83,7 +83,6 @@ class PhilippineHolidays
             // usually it is blocked on the first request
             // we can retry again to request the page
             if($ex->getCode() === 403 && !$isRetry) {
-                sleep(5);
                 return self::fetch($currentYear, $client, true);
             }
 
