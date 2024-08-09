@@ -1,6 +1,7 @@
 # Fetch Philippine Holidays
 
-This package can fetch regular and special holidays from the official https://www.officialgazette.gov.ph/nationwide-holidays/ website
+This package can fetch regular and special holidays from the official website
+https://www.officialgazette.gov.ph/nationwide-holidays/ 
 
 ```php
 use Dkvhin\PhHolidays\PhilippineHolidays;
@@ -33,9 +34,6 @@ use Dkvhin\PhHolidays\PhilippineHolidays;
 // for the current year
 $holidays = PhilippineHolidays::fetch();
 
-
-// for the current year
-$holidays = PhilippineHolidays::fetch();
 
 // you can also pass specific year
 // NOTE that the website only provides the last 6 years worth of holidays
