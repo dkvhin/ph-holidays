@@ -6,10 +6,13 @@ use DOMElement;
 use DOMDocument;
 use DOMNodeList;
 use Carbon\CarbonImmutable;
+use GuzzleHttp\HandlerStack;
 use Dkvhin\PhHolidays\Exceptions\InvalidYear;
 
 class PhilippineHolidays
 {
+    protected static ?HandlerStack $handlerStack = null;
+    
     /**
      * @param array<int<0, max>, array{name: string, date: string}> $regularHolidays
      * @param array<int<0, max>, array{name: string, date: string}> $specialHolidays
@@ -19,6 +22,12 @@ class PhilippineHolidays
         protected array $specialHolidays,
     ) {}
 
+    /**
+     * A static method for overriding the guzzle client handler
+     */
+    public static function setMockHandler(HandlerStack $handlerStack) : void {
+        self::$handlerStack = $handlerStack;
+    }
 
     public static function fetch(?int $currentYear = null): static
     {
@@ -27,7 +36,7 @@ class PhilippineHolidays
         self::ensureYearCanBeFetched($currentYear);
 
         $endpoint = "https://www.officialgazette.gov.ph/nationwide-holidays/{$currentYear}/";
-        $client = new \GuzzleHttp\Client();
+        $client = new \GuzzleHttp\Client(['handler' => self::$handlerStack]);
         try {
             $response = $client->request('GET', $endpoint, [
                 'headers'   => [
