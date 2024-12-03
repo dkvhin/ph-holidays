@@ -141,6 +141,6 @@ class PhilippineHolidays
      */
     public function special(): array
     {
-        return $this->regularHolidays;
+        return $this->specialHolidays;
     }
 }
