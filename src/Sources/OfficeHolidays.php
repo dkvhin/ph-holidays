@@ -7,8 +7,9 @@ use DOMDocument;
 use DOMNodeList;
 use Carbon\CarbonImmutable;
 use Dkvhin\PhHolidays\Exceptions\InvalidYear;
+use DOMXPath;
 
-class TimeAndDate
+class OfficeHolidays
 {
     /**
      * @param array<int<0, max>, array{name: string, date: string}> $regularHolidays
@@ -26,7 +27,7 @@ class TimeAndDate
 
         self::ensureYearCanBeFetched($currentYear);
 
-        $endpoint = "https://www.timeanddate.com/holidays/philippines/{$currentYear}";
+        $endpoint = "https://www.officeholidays.com/countries/philippines/{$currentYear}";
         $client ??= new \GuzzleHttp\Client();
 
         try {
@@ -51,22 +52,23 @@ class TimeAndDate
             $dom = new DOMDocument();
             $dom->loadHTML($content, LIBXML_NOERROR);
             $dom->preserveWhiteSpace = false;
+            $xpath = new DOMXPath($dom); 
 
             $regularHolidays = [];
             $specialHolidays = [];
 
             // Regular Holiday
-            $table = $dom->getElementById('holidays-table');
+            $table = $xpath->query("//table[@class='country-table']")[0];
     
             if ($table) {
                 $tbody = $table->getElementsByTagName('tbody');
                 if ($item = $tbody->item(0)) {
                     $rows = $item->getElementsByTagName('tr');
                     $regularHolidays = self::formatHoliday($rows, $currentYear, 'Regular Holiday');
-                    $specialHolidays = self::formatHoliday($rows, $currentYear, 'Special Non-working Holiday');
+                    $specialHolidays = self::formatHoliday($rows, $currentYear, 'Special Non-working Day');
                 }
             }
-            
+
             return new static($regularHolidays, $specialHolidays);
         } catch (\GuzzleHttp\Exception\ClientException $ex) {
 
@@ -89,25 +91,24 @@ class TimeAndDate
     {
         $response = [];
         foreach ($rows as $row) {
-            $colsTh = $row->getElementsByTagName('th');
-
-            if(count($colsTh) < 1) {
-                continue;
-            }
-
             $cols = $row->getElementsByTagName('td');
 
             if(count($cols) < 1) {
                 continue;
             }
 
-            if (strtolower($type) != strtolower(trim($cols[2]->nodeValue))) {
+            if (strtolower(trim($cols[3]->nodeValue)) != 'national holiday') {
                 continue;
             }
 
+           
+            if (strtolower($type) != strtolower(trim($cols[4]->nodeValue))) {
+                continue;
+            }
+            
             $response[] = [
-                'name'  => trim($cols[1]->getElementsByTagName('a')[0]->nodeValue),
-                'date'  => CarbonImmutable::parse(trim($colsTh[0]->nodeValue) . ' ' . $currentYear)->format('M d, Y')
+                'name'  => trim($cols[2]->getElementsByTagName('a')[0]->nodeValue),
+                'date'  => CarbonImmutable::parse(trim($cols[1]->nodeValue) . ' ' . $currentYear)->format('M d, Y')
             ];
         }
 

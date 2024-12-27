@@ -10,6 +10,7 @@ use Dkvhin\PhHolidays\PhilippineHolidays;
 use Dkvhin\PhHolidays\Sources\TimeAndDate;
 use GuzzleHttp\Exception\RequestException;
 use Dkvhin\PhHolidays\Exceptions\InvalidYear;
+use Dkvhin\PhHolidays\Sources\OfficeHolidays;
 
 it('can get holidays on the current year', function () {
 
@@ -43,6 +44,28 @@ it('can get holidays on the current year 2', function () {
     $handlerStack = HandlerStack::create($mock);
     $client = new Client(['handler'  => $handlerStack]);
     $fetched = TimeAndDate::fetch(null, $client);
+
+    $holidays = $fetched->regular();
+    expect($holidays)
+        ->toBeArray()
+        ->not()->toBeEmpty();
+
+    $holidays = $fetched->special();
+    expect($holidays)
+        ->toBeArray()
+        ->not()->toBeEmpty();
+});
+
+it('can get holidays on the current year 3', function () {
+
+    // Create a mock and queue two responses.
+    // $mock = new MockHandler([
+    //     new Response(200, ['X-Foo' => 'Bar'], file_get_contents("./tests/html/holidays2.html"))
+    // ]);
+
+    // $handlerStack = HandlerStack::create($mock);
+    // $client = new Client(['handler'  => $handlerStack]);
+    $fetched = OfficeHolidays::fetch(2025);
 
     $holidays = $fetched->regular();
     expect($holidays)
